@@ -12,15 +12,15 @@ This dataset issues may affect model performance in two ways:
 
 To detect these errors at scale, we should analyze the training data and look for outliers. For example, we can analyze all the pose positions labeled as a smash and: (i) look for the mean properties of the keypoints and (ii) identify those samples that are two or three sigmas apart (probably misslabeled). 
 
-Smashes are rare in the dataset but very important for the product. The model often misses them while performing well on common hits.
+3. Smashes are rare in the dataset but very important for the product. The model often misses them while performing well on common hits.
 Without changing the model architecture, explain which dataset, training, and evaluation strategy changes you would consider. Here, the idea is to discuss tradeoffs and risks of each approach and how you would verify that improvements are real and not overfitting artifacts.
 
 This issue may be related to a data imbalance. The loss function averages all the samples equally. Since the model is not penalized much for missing a smash (because it is a rare event), it may not be learning to detect them. We can try to balance the dataset by oversampling the smash class or using a weighted loss function (giving more weight to a smash class). However, this can improve the false positive rate. Therefore, we should include samples where the player moves fast or tries similar actions to a smash to make sure it is learning to detect them, not overfitting, and is robust to similar actions. In evaluation, accuracy is not the best metric: others such as precision, recall, or F1-score may be better. The evaluation should be as close to reality, so evaluation  should not be augmented with more smash events. 
 
-Two training runs with the same configuration produce noticeably different results. One model is stable but less accurate; another is more accurate but produces jittery keypoints and inconsistent hit timing.
+4. Two training runs with the same configuration produce noticeably different results. One model is stable but less accurate; another is more accurate but produces jittery keypoints and inconsistent hit timing.
 Provide a reasoning to decide which model is actually better for production. What additional tests, metrics, and scenario-based evaluations would you design to support the decision?
 
-Which model would you propose for this application? Why?
+5. Which model would you propose for this application? Why?
 
 I would choose the stable model, because:
 - The perceived quality of the model is sometimes more important than a "perfect" accuracy. A stable model, even if slightly less accurate, feels solid and reliable.
